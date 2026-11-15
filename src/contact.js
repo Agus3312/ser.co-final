@@ -30,3 +30,9 @@ export function getActiveSocialLinks(urls) {
     .filter(({ key }) => urls[key])
     .map(({ key, name }) => ({ key, name, url: urls[key] }));
 }
+// Canal principal: WhatsApp si hay número cargado; si no, Instagram.
+export function resolvePrimaryContact(config, message) {
+  const whatsapp = config.whatsappPhone ? buildWhatsAppUrl(config.whatsappPhone, message) : null;
+  if (whatsapp) return { channel: 'whatsapp', url: whatsapp, label: 'WhatsApp' };
+  return { channel: 'instagram', url: config.instagramUrl, label: 'Instagram' };
+}
